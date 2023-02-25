@@ -7,9 +7,6 @@ import dotenv from "dotenv";
 
 
 dotenv.config();
-const PORT = process.env.PORT || 8000;
-const MAINPORT = process.env.CALL_BACK
-
 
 export const addpaymentGateway = async (request, response) => {
   const { amount } = request.body;
@@ -23,7 +20,7 @@ export const addpaymentGateway = async (request, response) => {
     paytmParams["ORDER_ID"] = uuid();
     paytmParams["CUST_ID"] = process.env.PAYTM_CUS_ID;
     paytmParams["TXN_AMOUNT"] = totalPrice;
-    paytmParams["CALLBACK_URL"] =`${PORT}/callback`;
+    paytmParams["CALLBACK_URL"] ="http://localhost:8000/callback";
     paytmParams["EMAIL"] = "flipkartdemo@gmail.com";
     paytmParams["MOBILE_NO"] = "1234567890";
 
@@ -79,7 +76,7 @@ export const paymentresponse = async (request, response) => {
           });
           post_res.on("end", function () {
             JSON.parse(res);
-            response.redirect(`${MAINPORT}`);
+            response.redirect("http://localhost:3000");
           });
         });
         post_req.write(post_data);
